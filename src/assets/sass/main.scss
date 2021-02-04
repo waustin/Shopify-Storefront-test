@@ -7,4 +7,41 @@
 .product {
     border: 1px solid $grey-light;
     padding: 2rem;
+
+    .selected-image {
+        display: block;
+        border: 2px solid $grey-lighter;
+        padding: 2px;
+    }
+
+    .image-gallery {
+        display: flex;
+        flex-wrap: wrap;
+        padding: 20px 0;
+        img {
+            max-width: 150px;
+            border: 1px solid $grey-light;
+            margin: 4px;
+            display: block;
+            &:hover {
+                cursor: pointer;
+            }
+        }
+    }
+
+    .variant-wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        margin-bottom: 40px;
+        .variant {
+            padding: 10px;
+            background-color: $grey-lighter;
+            border: 1px solid $grey;
+            margin: 5px;
+
+            img {
+                max-width: 100px;
+            }
+        }
+    }
 }

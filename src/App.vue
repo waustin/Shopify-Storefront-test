@@ -1,7 +1,7 @@
 <template>
   <div id="app">
       <section class="section">
-        <Product id="product-id" />
+        <Product id="5889796341918" />
       </section>
   </div>
 </template>
