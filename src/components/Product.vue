@@ -110,7 +110,7 @@ export default {
                 if(this.product.images.length > 0) {
                     this.selectedImage = this.product.images[0];
                 }
-                this.initSelectedOptions = this.product.selectedOptions;
+                this.selectedVariant = this.product.variants[0];
                 console.log(this.product);
             }
             catch(error) {
