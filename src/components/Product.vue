@@ -21,7 +21,7 @@
                     <strong>Product Available For Sale: {{product.availableForSale}}</strong>
                 </p>
 
-                <div class="product-options">
+                <div class="product-options" v-if="numVariants > 1">
                     <variant-picker v-for="option in product.options"
                         :option="option"
                         @optionChanged="onOptionChange"
@@ -150,6 +150,13 @@ export default {
         }
     },
     computed: {
+        numVariants() {
+            if( this.product ) {
+                return this.product.variants.length
+            } else {
+                return 0;
+            }
+        },
         canAddToCart() {
             if(this.product && this.product.availableForSale &&
                this.selectedVariant && this.selectedVariant.available) {
