@@ -44,4 +44,12 @@
             }
         }
     }
+
+    .product-options {
+        display: flex;
+        .variant-picker {
+            margin-right: 1rem;
+        }
+
+    }
 }

@@ -13,24 +13,20 @@
                     <p class="description mb-2" v-if="product.description">
                         {{product.description}}
                     </p>
-                    <p>
+                    <p class="mb-3">
                         <strong>Product Available For Sale: {{product.availableForSale}}</strong>
                     </p>
 
-                    <div class="product-options columns">
-                        <div v-for="opt in product.options" :key="opt.id">
-                            <div class="field column">
-                                <label class="label">{{opt.name}}</label>
-                                <div class="select">
-                                    <select change="onOptionChange(opt, $event)">
-                                        <option v-for="(value, idx) in opt.values" :key="idx">
-                                            {{value}}
-                                        </option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="product-options">
+                        <variant-picker v-for="option in product.options"
+                            :option="option"
+                            @optionChanged="onOptionChange"
+                            :key="option.id" />
                     </div>
+
+                    <p>
+                        Price: <strong>{{price}}</strong> 
+                    </p>
                 </div>
             </header>
 
@@ -40,6 +36,7 @@
                     @click="onGalleryImageClick(image)" />
             </div>
 
+            <h3 class="is-size-3">Product Variants</h3>
                 <div class="variant-wrapper">
                     <div class="variant" v-for="v in product.variants" :key="v.id" >
                         title: {{v.title}}<br>
@@ -68,10 +65,11 @@
 
 import ShopifyClient from 'shopify-buy';
 
+import VariantPicker from './VariantPicker';
 export default {
     name: 'Product',
     components: {
-    
+        VariantPicker,
     },
     props: {
         id: {
@@ -87,6 +85,11 @@ export default {
             loading: false,
             product: null,
             selectedImage: null,
+
+            selectedOptions: [],
+            selectedVariant: null,
+
+            price: null
         }
     },
     created() {
@@ -107,6 +110,8 @@ export default {
                 if(this.product.images.length > 0) {
                     this.selectedImage = this.product.images[0];
                 }
+                this.initSelectedOptions = this.product.selectedOptions;
+                console.log(this.product);
             }
             catch(error) {
                 console.log('Error Fetching Product Data');
@@ -124,15 +129,27 @@ export default {
         onGalleryImageClick(image) {
             this.selectedImage = image;
         },
-        onOptionChange(opt, event) {
-            console.log('onOptionChange');
-            console.log(opt);
-            console.log(event);
+        onOptionChange(option, value) {
+            console.log('onOptionChange', option, value);
+            this.selectedOptions[option] = value;
+
+            const selectedVariant = this.product.variants.find((variant) => {
+                return variant.selectedOptions.every((selectedOption) => {
+                        return this.selectedOptions[selectedOption.name] === selectedOption.value;
+                });
+            });
+            
+            this.selectedVariant = selectedVariant;
         }
     },
-    filters: {
-        pretty: function(value) {
-            return JSON.stringify(JSON.parse(value), null, 2);
+    watch: {
+        selectedVariant(val) {
+            if(val) {
+                this.price = this.selectedVariant.price;
+                if(val.image) {
+                    this.selectedImage = val.image;
+                }
+            }
         }
     }
 }
