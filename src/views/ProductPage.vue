@@ -16,8 +16,7 @@ export default {
     props: {
         id: {
             type: String,
-            required: false,
-            default: "5889796341918"
+            required: true,
         },
     },
 }
