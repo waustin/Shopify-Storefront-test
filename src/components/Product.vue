@@ -1,6 +1,9 @@
 <template>
     <div class="product-component">
-        <div class="loading" v-if="loading">Loading&hellip;</div>
+        <div class="notification is-info" v-if="loading">Loading&hellip;</div>
+        <div v-if="error" class="notification is-danger">
+            {{error}}
+        </div>
         <div class="product columns" v-if="product">
             <div class="column is-two-fifths media-col">
             
@@ -96,7 +99,8 @@ export default {
             selectedOptions: [],
             selectedVariant: null,
 
-            price: null
+            price: null,
+            error: null,
         }
     },
     created() {
@@ -120,7 +124,6 @@ export default {
             }
             catch(error) {
                 // Cound not decode ID, assume ID needs to be encoded;
-                console.log('getshopifyProductData()', this.id)
                 productID = this.encodeShopifyProductId(this.id);
             }
 
@@ -140,6 +143,7 @@ export default {
                 this.loading = false;
                 console.log('Error Fetching Product Data');
                 console.log(error);
+                this.error = error;
             }
         },
         encodeShopifyVariantId(variantID) {

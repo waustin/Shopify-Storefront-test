@@ -1,6 +1,9 @@
 <template>
     <div class="product-list-component">
-        <div class="loading" v-if="loading">Loading&hellip;</div>
+        <div class="notification is-info" v-if="loading">Loading&hellip;</div>
+        <div v-if="error" class="notification is-danger">
+            {{error}}
+        </div>
         <div v-if="product_list" class="product-list">
             <div class="product-list-item"
                 v-for="product in product_list" :key="product.id">
@@ -27,6 +30,7 @@ export default {
             loading: true,
             shopifyClient: null,
             product_list: null,
+            error: null,
             
         };
      },
@@ -50,6 +54,7 @@ export default {
              catch(error) {
                 console.log('Error Fetching Product Data');
                 console.log(error);
+                this.error = error;
             }
         }
     }
