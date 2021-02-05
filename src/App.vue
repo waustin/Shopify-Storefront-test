@@ -3,6 +3,7 @@
         <nav id="nav" class="navbar is-black">
             <div class="navbar-menu">
                 <div class="navbar-start">
+                    <router-link to="/" class="navbar-item">Home</router-link>
                     <router-link 
                         v-for="product in products" :key="product.id"
                         :to="{ name: 'Product', params: { id: product.id}}" class="navbar-item">
