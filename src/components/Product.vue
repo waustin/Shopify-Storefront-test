@@ -1,7 +1,7 @@
 <template>
     <div class="product-component">
         <div class="loading" v-if="loading">Loading&hellip;</div>
-        <div class="product" v-else>
+        <div class="product columns" v-else>
             <div class="column is-two-fifths media-col">
             
                 <img v-if="selectedImage" class="selected-image mb-4" :src="selectedImage.src" :key="selectedImage.id"/>

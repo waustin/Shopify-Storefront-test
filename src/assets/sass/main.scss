@@ -47,10 +47,12 @@
     .image-gallery {
         display: flex;
         flex-wrap: wrap;
-        justify-content: space-evenly;
+        justify-content: flex-start;
+        margin: 1rem -10px;
         img {
+            margin: 0 10px;
             max-width: 120px;
-            border: 1px solid $grey-lighter;
+            border: 2px solid $grey-lighter;
             display: block;
             &:hover {
                 cursor: pointer;
