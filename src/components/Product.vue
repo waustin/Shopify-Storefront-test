@@ -40,7 +40,7 @@
         </div>            
 
 
-        <div class="product-extra-dev-info">
+        <div class="product-extra-dev-info" v-if="product">
             <h3 class="is-size-3">Product Debug Info</h3>
             <h4 class="is-size-4">Product Variants</h4>
                 <div class="variant-wrapper">
