@@ -70,3 +70,22 @@
 
     }
 }
+
+.product-list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: stretch;
+    background-color: $grey-lightest;
+    padding: 2rem;
+
+    .product-list-item {
+        border: 1px solid $grey-lighter;
+        padding: 2rem;
+        overflow: hidden;
+        background-color: $white;
+        margin: 5px;
+        width: 250px;
+    }
+}

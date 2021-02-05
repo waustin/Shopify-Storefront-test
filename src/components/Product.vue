@@ -1,7 +1,7 @@
 <template>
     <div class="product-component">
         <div class="loading" v-if="loading">Loading&hellip;</div>
-        <div class="product columns" v-else>
+        <div class="product columns" v-if="product">
             <div class="column is-two-fifths media-col">
             
                 <img v-if="selectedImage" class="selected-image mb-4" :src="selectedImage.src" :key="selectedImage.id"/>
@@ -110,17 +110,34 @@ export default {
     },
     methods: {
         async getShopifyProductData(id) {
-            const productID = this.encodeShopifyProductId(this.id);
+            let productID = id;
+
+            try {
+                // Encode ID from REST to GQL format if needed
+                if( !atob(id).startsWith('gid://') ) {
+                    productID = this.encodeShopifyProductId(this.id);
+                } 
+            }
+            catch(error) {
+                // Cound not decode ID, assume ID needs to be encoded;
+                console.log('getshopifyProductData()', this.id)
+                productID = this.encodeShopifyProductId(this.id);
+            }
+
             try  {
                 this.product = await this.shopifyClient.product.fetch(productID);
+                if(!this.product) {
+                    throw 'Error Loading Product';
+                }
                 this.loading = false;
                 if(this.product.images.length > 0) {
                     this.selectedImage = this.product.images[0];
                 }
                 this.selectedVariant = this.product.variants[0];
-                console.log(this.product);
+    
             }
             catch(error) {
+                this.loading = false;
                 console.log('Error Fetching Product Data');
                 console.log(error);
             }
