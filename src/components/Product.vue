@@ -2,41 +2,47 @@
     <div class="product-component">
         <div class="loading" v-if="loading">Loading&hellip;</div>
         <div class="product" v-else>
-            <header class="product-header columns mb-3">  
-                
-                <div v-if="selectedImage" class="column is-two-fifths selected-image-col">
-                    <img class="selected-image" :src="selectedImage.src" :key="selectedImage.id"/>
-                </div>  
-
-                <div class="column info">
-                    <h2 class="is-size-2">{{product.title}}</h2>
-                    <p class="description mb-2" v-if="product.description">
-                        {{product.description}}
-                    </p>
-                    <p class="mb-3">
-                        <strong>Product Available For Sale: {{product.availableForSale}}</strong>
-                    </p>
-
-                    <div class="product-options">
-                        <variant-picker v-for="option in product.options"
-                            :option="option"
-                            @optionChanged="onOptionChange"
-                            :key="option.id" />
-                    </div>
-
-                    <p>
-                        Price: <strong>{{price}}</strong> 
-                    </p>
+            <div class="column is-two-fifths media-col">
+            
+                <img v-if="selectedImage" class="selected-image mb-4" :src="selectedImage.src" :key="selectedImage.id"/>
+            
+                <div class="image-gallery">
+                    <img v-for="image in product.images" :key="image.id" :src="image.src"
+                        @click="onGalleryImageClick(image)" />
                 </div>
-            </header>
+            </div>  
 
+            <div class="column info-col">
+                <h2 class="is-size-2">{{product.title}}</h2>
+                <p class="description mb-2" v-if="product.description">
+                    {{product.description}}
+                </p>
+                <p class="mb-3">
+                    <strong>Product Available For Sale: {{product.availableForSale}}</strong>
+                </p>
 
-            <div class="image-gallery">
-                <img v-for="image in product.images" :key="image.id" :src="image.src"
-                    @click="onGalleryImageClick(image)" />
+                <div class="product-options">
+                    <variant-picker v-for="option in product.options"
+                        :option="option"
+                        @optionChanged="onOptionChange"
+                        :key="option.id" />
+                </div>
+
+                <p class="mb-4">
+                    Price: <strong>{{price}}</strong> 
+                </p>
+                
+                <div class="field">
+                    <button v-if="canAddToCart" class="button is-primary">Add To Cart</button>
+                    <p v-else class="has-text-danger">Cannot Add to Cart</p>
+                </div>
             </div>
+        </div>            
 
-            <h3 class="is-size-3">Product Variants</h3>
+
+        <div class="product-extra-dev-info">
+            <h3 class="is-size-3">Product Debug Info</h3>
+            <h4 class="is-size-4">Product Variants</h4>
                 <div class="variant-wrapper">
                     <div class="variant" v-for="v in product.variants" :key="v.id" >
                         title: {{v.title}}<br>
@@ -53,7 +59,8 @@
                 ENCODED PRODUCT ID: {{encodeShopifyProductId(id)}}
             
             </p>
-            <pre>
+
+            <pre class="debug">
                 {{ product }}
             </pre>
             
@@ -141,6 +148,17 @@ export default {
             
             this.selectedVariant = selectedVariant;
         }
+    },
+    computed: {
+        canAddToCart() {
+            if(this.product && this.product.availableForSale &&
+               this.selectedVariant && this.selectedVariant.available) {
+                   return true;
+            } else {
+                return false;
+            }
+                
+        },
     },
     watch: {
         selectedVariant(val) {

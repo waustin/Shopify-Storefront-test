@@ -4,35 +4,24 @@
 
 @import '~bulma/bulma';
 
-.product {
+.debug {
+    font-family: monospace;
     border: 1px solid $grey-light;
+}
+
+.product-extra-dev-info {
+    font-family: monospace;
+    border: 2px solid $grey-light;
     padding: 2rem;
-
-    .selected-image {
-        display: block;
-        border: 2px solid $grey-lighter;
-        padding: 2px;
-    }
-
-    .image-gallery {
-        display: flex;
-        flex-wrap: wrap;
-        padding: 20px 0;
-        img {
-            max-width: 150px;
-            border: 1px solid $grey-light;
-            margin: 4px;
-            display: block;
-            &:hover {
-                cursor: pointer;
-            }
-        }
-    }
+    margin: 2rem 0;
+    background-color: $grey-lightest;
+    font-size: 80%;
 
     .variant-wrapper {
         display: flex;
         flex-wrap: wrap;
         margin-bottom: 40px;
+
         .variant {
             padding: 10px;
             background-color: $grey-lighter;
@@ -44,6 +33,32 @@
             }
         }
     }
+}
+
+.product {
+    border: 1px solid $grey-light;
+    padding: 2rem;
+
+    .selected-image {
+        display: block;
+        border: 2px solid $grey-lighter;
+    }
+
+    .image-gallery {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-evenly;
+        img {
+            max-width: 120px;
+            border: 1px solid $grey-lighter;
+            display: block;
+            &:hover {
+                cursor: pointer;
+            }
+        }
+    }
+
+    
 
     .product-options {
         display: flex;
