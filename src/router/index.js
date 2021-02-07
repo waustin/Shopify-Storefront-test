@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home';
 import ProductPage from '../views/ProductPage';
+import ShopifyApollo from '../views/ShopifyApollo';
 
 Vue.use(VueRouter)
 
@@ -16,6 +17,10 @@ const routes = [
     name: 'Product',
     component: ProductPage,
     props: true,
+  },
+  {
+    path: '/shopify-apollo',
+    component: ShopifyApollo,
   }
 ]
 
