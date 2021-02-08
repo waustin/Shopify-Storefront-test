@@ -1,6 +1,17 @@
 <template>
   <div>
       <h1 class="title">Shopify Apollo Page</h1>
+      <p>
+          Shop Loading: [{{$apollo.queries.shop.loading}}]
+    </p>
+      <div v-if="$apollo.queries.shop.loading">Loading ...</div>
+      <div v-if="!$apollo.queries.shop.loading">
+            <h4 class="is-size-4 mb-2">{{shop.name}}</h4>
+        
+            <div v-for="product in shop.products.edges" :key="product.id">
+                <h5 class="is-size-5">{{product.node.title}}</h5>
+            </div>
+      </div>
       <pre>
           Shop Name: {{shop.name}}<br>
           Shop Description: {{shop.description}}
